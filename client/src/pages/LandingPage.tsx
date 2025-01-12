@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic, Brain, Hourglass, ArrowRight } from "lucide-react";
@@ -73,6 +73,23 @@ const LandingPage: React.FC<{ navigateToModel: () => void }> = ({
         "Enjoy instant interactions powered by real-time AI capabilities.",
     },
   ];
+
+  const [sam, setSam] = useState("");
+
+  useEffect(() => {
+    fetch("https://twox2pac-backend.onrender.com/")
+      .then((response) => response.json())  // Parse the JSON response
+      .then((data) => {
+        console.log(data);
+        setSam(data.message);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);;
+
+  console.log(sam)
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900">
       <div className="relative overflow-hidden">
