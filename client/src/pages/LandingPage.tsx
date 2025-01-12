@@ -103,7 +103,7 @@ const LandingPage: React.FC<{ navigateToModel: () => void }> = ({
             </h1>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
               Experience the next generation of communication with our advanced
-              AI-powered chatbot. Real-time conversations enhanced with
+              AI-powered voice chatbot. Real-time conversations enhanced with
               cutting-edge artificial intelligence.
             </p>
             <HeroButton onClick={navigateToModel}>
@@ -127,7 +127,7 @@ const LandingPage: React.FC<{ navigateToModel: () => void }> = ({
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               At 2x2pac, we believe in providing innovative solutions to help
-              you achieve your goals. Our AI-powered assistant is designed to
+              you achieve your goals. Our AI-powered voice assistant is designed to
               offer seamless support, streamline your workflows, and enhance
               your productivity.
             </p>
@@ -142,7 +142,7 @@ const LandingPage: React.FC<{ navigateToModel: () => void }> = ({
 
       <Section title="Ready to Experience the Future?" className="text-center">
         <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-          Join thousands of users who are already revolutionizing their
+          Try it out today to be part of the users who are already revolutionizing their
           communication with AI
         </p>
         <HeroButton onClick={navigateToModel}>Get Started Now</HeroButton>
