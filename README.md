@@ -1,7 +1,9 @@
 Chat Interface System Architecture Summary
 The Chat Interface System enables real-time communication using Gemini AI, supporting audio and image-based interactions. It is designed with a modular and resource-efficient architecture comprising three main components: Frontend, Backend, and Gemini API Integration.
 
-![Alt Architecture](images/image-(1).png)
+![Image: Architecture](images/arch.png)
+
+
 Frontend Architecture (React)
     • Components: 
         1. Chat Interface Component 
