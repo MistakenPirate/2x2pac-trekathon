@@ -59,7 +59,7 @@ const LandingPage: React.FC<{ navigateToModel: () => void }> = ({
       icon: Mic,
       title: "Speech Recognition",
       description:
-        "Capture and convert speech to text in real-time using advanced AI.",
+        "Talk in real-time with an advanced AI.",
     },
     {
       icon: Brain,
