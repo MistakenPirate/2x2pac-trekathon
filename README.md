@@ -2,9 +2,6 @@
 
 The Chat Interface System enables real-time communication using Gemini AI, supporting audio and image-based interactions. It is designed with a modular and resource-efficient architecture comprising three main components: **Frontend**, **Backend**, and **Gemini API Integration**.
 
-![Image: Architecture](images/arch.png)
-
-
 ---
 
 ## Frontend Architecture (React)
@@ -84,3 +81,24 @@ The Chat Interface System enables real-time communication using Gemini AI, suppo
 - **Error Handling:** Comprehensive error reporting across all components.
 
 This architecture provides a robust, scalable, and user-friendly chat system tailored for interactive AI-based communication.
+
+---
+
+## Local Development Setup
+
+### Frontend
+1. Navigate to the `client` directory.
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Backend
+
+1. Navigate to the `backend` directory.
+2. Build and run the Docker container:
+   ```bash
+   docker build -t chat-backend .
+   docker run -p 8000:8000 chat-backend
+   ```
+
