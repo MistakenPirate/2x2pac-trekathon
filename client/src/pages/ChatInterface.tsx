@@ -26,7 +26,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   base64ToFloat32Array,
   float32ToPcm16,
-  systemPrompt,
+  systemPrompt2,
 } from "@/lib/utils";
 
 interface Config {
@@ -92,7 +92,7 @@ const ChatInterface: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [config, setConfig] = useState<Config>({
-    systemPrompt: systemPrompt,
+    systemPrompt: systemPrompt2,
     voice: "Puck",
     googleSearch: true,
     allowInterruptions: false,
