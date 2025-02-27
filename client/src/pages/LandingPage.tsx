@@ -14,9 +14,9 @@ const LandingPage = ({navigateToModel}) => {
   const features: Feature[] = [
     {
       icon: Mic,
-      title: "Speech Recognition",
+      title: "Instant Emotional Support",
       description:
-        "Talk in real-time with an advanced AI that understands natural speech patterns and nuances.",
+        "Get timely, AI-driven responses that help you navigate your thoughts and feelings with ease.",
     },
     {
       icon: Brain,
@@ -27,7 +27,7 @@ const LandingPage = ({navigateToModel}) => {
       icon: MessageCircle,
       title: "Real-Time Processing",
       description:
-        "Enjoy instant interactions powered by sophisticated AI capabilities with minimal latency.",
+        "Speak freely with an AI that understands your emotions and responds with care in real-time.",
     },
   ];
 
@@ -116,7 +116,7 @@ const LandingPage = ({navigateToModel}) => {
       <Section className="bg-calmora-sand">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-calmora-900 mb-8">
-            Empowering Your Digital Experience <span className="inline-block animate-float">🌿</span>
+          Your AI companion for a calmer mind <span className="inline-block animate-float">🌿</span>
           </h2>
           <p className="text-xl text-calmora-700 mb-6">
           At Calmora, we believe in providing compassionate and intelligent support to help you navigate life’s challenges with ease.
@@ -137,7 +137,7 @@ const LandingPage = ({navigateToModel}) => {
                 <Mic className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-semibold text-calmora-900 mb-2">Experience Calmora AI</h3>
-              <p className="text-calmora-600 mb-8">See how our voice assistant transforms your digital interactions.</p>
+              <p className="text-calmora-600 mb-8">See how Calmora transforms your journey to mental well-being with intelligent and compassionate support.</p>
               <HeroButton onClick={navigateToModel} variant="secondary">
                 Watch Demo
               </HeroButton>
