@@ -82,8 +82,7 @@ const LandingPage = ({navigateToModel}) => {
             <p 
               className={`text-xl text-calmora-600 mb-10 max-w-2xl mx-auto transition-opacity-slow transition-transform-slow delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
             >
-              Experience the next generation of communication with our advanced AI-powered voice assistant. 
-              Natural, intuitive, and designed for the way you work.
+Experience the next generation of mental wellness with our advanced AI-powered therapy assistant. Compassionate, intuitive, and designed to support you every step of the way.
             </p>
             <div 
               className={`transition-opacity-slow transition-transform-slow delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
