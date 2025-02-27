@@ -77,7 +77,7 @@ const LandingPage = ({navigateToModel}) => {
             <h1 
               className={`text-5xl sm:text-6xl md:text-7xl font-bold text-calmora-900 mb-6 transition-opacity-slow ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             >
-              The Future of Voice Interaction <span className="text-3xl">🧘</span>
+              A safe space, powered by AI, designed for you <span className="text-3xl">🧘</span>
             </h1>
             <p 
               className={`text-xl text-calmora-600 mb-10 max-w-2xl mx-auto transition-opacity-slow transition-transform-slow delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
@@ -119,13 +119,11 @@ const LandingPage = ({navigateToModel}) => {
             Empowering Your Digital Experience <span className="inline-block animate-float">🌿</span>
           </h2>
           <p className="text-xl text-calmora-700 mb-6">
-            At Calmora, we believe in providing innovative solutions that help you achieve more with less effort. 
-            Our AI-powered voice assistant is designed to offer seamless support, streamline your workflows, 
-            and enhance your productivity.
+          At Calmora, we believe in providing compassionate and intelligent support to help you navigate life’s challenges with ease.
+          Our AI-powered therapy assistant is designed to offer a safe space, promote emotional well-being, and guide you toward a healthier mind—anytime, anywhere.
           </p>
           <p className="text-xl text-calmora-700 mb-12">
-            Join a community of forward-thinking individuals who are unlocking new potential with cutting-edge 
-            technology and intuitive design. Experience the perfect balance of power and simplicity.
+          Join a community of mindful individuals embracing well-being with intelligent support and compassionate design. Experience the perfect blend of empathy and innovation with Calmora.
           </p>
         </div>
       </Section>
