@@ -10,7 +10,7 @@ interface Feature {
   description: string;
 }
 
-const Index = () => {
+const LandingPage = ({navigateToModel}) => {
   const features: Feature[] = [
     {
       icon: Mic,
@@ -53,10 +53,6 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, [isLoaded, textIndex]);
 
-  const navigateToModel = () => {
-    console.log("Navigate to voice model");
-    // Implementation would go here
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-calmora-sand to-white">
@@ -186,4 +182,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default LandingPage;

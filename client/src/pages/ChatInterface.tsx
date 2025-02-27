@@ -23,7 +23,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { Input } from "@/components/ui/input";
-import { base64ToFloat32Array, float32ToPcm16 } from "@/lib/utils";
+import {
+  base64ToFloat32Array,
+  float32ToPcm16,
+  systemPrompt,
+} from "@/lib/utils";
 
 interface Config {
   systemPrompt: string;
@@ -88,8 +92,7 @@ const ChatInterface: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [config, setConfig] = useState<Config>({
-    systemPrompt:
-      "You are a friendly Gemini 2.0 model. Respond verbally in a casual, helpful tone.",
+    systemPrompt: systemPrompt,
     voice: "Puck",
     googleSearch: true,
     allowInterruptions: false,
@@ -121,7 +124,7 @@ const ChatInterface: React.FC = () => {
   };
 
   const startStream = async (mode: "text" | "audio" | "video") => {
-    wsRef.current = new WebSocket(`wss://twox2pac-backend.onrender.com/ws/${clientId.current}`);
+    wsRef.current = new WebSocket(`ws://localhost:8000/ws/${clientId.current}`);
 
     wsRef.current.onopen = async () => {
       if (wsRef.current) {
@@ -347,7 +350,7 @@ const ChatInterface: React.FC = () => {
           </Alert>
         )}
 
-        <Card>
+        {/* <Card>
           <CardContent className="pt-6 space-y-4">
             <div className="space-y-2">
               <Label htmlFor="system-prompt">System Prompt</Label>
@@ -402,8 +405,8 @@ const ChatInterface: React.FC = () => {
               <Label htmlFor="google-search">Enable Google Search</Label>
             </div>
           </CardContent>
-        </Card>
-
+        </Card> */}
+        <h1 className="text-center text-4xl p-10 text-slate-400">Calmora: Your AI Therapist</h1>
         <Card>
           <CardContent className="p-6">
             <Tabs defaultValue="audio" className="h-[400px]">
