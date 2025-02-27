@@ -3,6 +3,7 @@ import { useState } from "react";
 import ChatInterface from "./pages/ChatInterface";
 import LandingPage from "./pages/LandingPage";
 
+
 function App() {
   const [isModelOpen, setIsModelOpen] = useState<boolean>(false);
   const navigateModel =()=>{
@@ -10,7 +11,7 @@ function App() {
   }
   return (
     <>
-    {isModelOpen ? (<ChatInterface/>) : (<LandingPage navigateToModel={navigateModel}/>)}
+     {isModelOpen ? (<ChatInterface/>) : (<LandingPage navigateToModel={navigateModel}/>)}
     </>
   );
 }

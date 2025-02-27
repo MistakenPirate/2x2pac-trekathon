@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import MeditationAudioPlayer from "../pages/MeditationAudioPlayer"
 import {
   Mic,
   StopCircle,
@@ -419,6 +420,9 @@ const ChatInterface: React.FC = () => {
                   <Video className="h-4 w-4" />
                   Video
                 </TabsTrigger>
+                <TabsTrigger value="meditation" className="flex gap-2">
+          🎧 Meditation
+        </TabsTrigger>
               </TabsList>
 
               <TabsContent value="audio" className="h-full">
@@ -475,6 +479,9 @@ const ChatInterface: React.FC = () => {
                     )}
                   </Button>
                 </div>
+              </TabsContent>
+              <TabsContent value="meditation">
+                <MeditationAudioPlayer/>
               </TabsContent>
             </Tabs>
           </CardContent>
