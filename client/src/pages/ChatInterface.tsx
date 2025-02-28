@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import MeditationAudioPlayer from "../pages/MeditationAudioPlayer"
+import MeditationAudioPlayer from "../pages/MeditationAudioPlayer";
 import {
   Mic,
   StopCircle,
@@ -29,6 +29,7 @@ import {
   float32ToPcm16,
   systemPrompt2,
 } from "@/lib/utils";
+import AudioRecorder from "@/components/AudioRecorder";
 
 interface Config {
   systemPrompt: string;
@@ -407,7 +408,9 @@ const ChatInterface: React.FC = () => {
             </div>
           </CardContent>
         </Card> */}
-        <h1 className="text-center text-4xl p-10 text-slate-400">Calmora: Your AI Therapist</h1>
+        <h1 className="text-center text-4xl p-10 text-slate-400">
+          Calmora: Your AI Therapist
+        </h1>
         <Card>
           <CardContent className="p-6">
             <Tabs defaultValue="audio" className="h-[400px]">
@@ -421,8 +424,11 @@ const ChatInterface: React.FC = () => {
                   Video
                 </TabsTrigger>
                 <TabsTrigger value="meditation" className="flex gap-2">
-          🎧 Meditation
-        </TabsTrigger>
+                  🎧 Meditation
+                </TabsTrigger>
+                <TabsTrigger value="sentiment" className="flex gap-2">
+                  Sentiment
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="audio" className="h-full">
@@ -481,7 +487,10 @@ const ChatInterface: React.FC = () => {
                 </div>
               </TabsContent>
               <TabsContent value="meditation">
-                <MeditationAudioPlayer/>
+                <MeditationAudioPlayer />
+              </TabsContent>
+              <TabsContent value="sentiment" className="h-full">
+                <AudioRecorder/>
               </TabsContent>
             </Tabs>
           </CardContent>
