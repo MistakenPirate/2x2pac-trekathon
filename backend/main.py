@@ -1,11 +1,22 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, WebSocket, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 import asyncio
 import json
 import os
+import io
+import speech_recognition as sr
 from dotenv import load_dotenv
 from websockets import connect
 from typing import Dict
+import google.generativeai as genai
+from textblob import TextBlob
+from pydantic import BaseModel
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -252,6 +263,136 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
         if client_id in connections:
             await connections[client_id].close()
             del connections[client_id]
+
+# Configure Gemini API
+api_key = os.environ.get("GEMINI_API_KEY")
+if api_key:
+    genai.configure(api_key=api_key)
+    gemini_model = genai.GenerativeModel("gemini-pro")
+else:
+    logger.warning("GEMINI_API_KEY not found in environment variables")
+
+class SentimentResponse(BaseModel):
+    transcription: str
+    sentiment: str
+    polarity: float
+
+def analyze_text_sentiment(text: str):
+    """Analyze sentiment using TextBlob"""
+    try:
+        analysis = TextBlob(text)
+        polarity = analysis.sentiment.polarity
+        
+        # Determine sentiment based on polarity
+        if polarity > 0.05:
+            sentiment = "Positive"
+        elif polarity < -0.05:
+            sentiment = "Negative"
+        else:
+            sentiment = "Neutral"
+            
+        return {"sentiment": sentiment, "polarity": polarity}
+    except Exception as e:
+        logger.error(f"Error in sentiment analysis: {str(e)}")
+        return {"sentiment": "Error", "polarity": 0.0}
+
+def transcribe_audio(audio_data: bytes) -> str:
+    """Transcribe audio using speech_recognition"""
+    try:
+        recognizer = sr.Recognizer()
+        
+        # Create a temporary WAV file to ensure format compatibility
+        temp_file = io.BytesIO(audio_data)
+        
+        # First, verify the file format
+        try:
+            with sr.AudioFile(temp_file) as source:
+                audio = recognizer.record(source)
+        except Exception as format_error:
+            logger.error(f"Audio format error: {str(format_error)}")
+            raise Exception(f"Audio format error: The file appears to be in an unsupported format. Please ensure it's a PCM WAV file.")
+        
+        # Reset position in the BytesIO object
+        temp_file.seek(0)
+        
+        # Now try to transcribe
+        with sr.AudioFile(temp_file) as source:
+            audio = recognizer.record(source)
+            
+        # Use multiple recognition services for reliability
+        try:
+            # Try Google first (requires internet)
+            text = recognizer.recognize_google(audio)
+            logger.info(f"Transcribed with Google: {text}")
+        except sr.RequestError as e:
+            logger.warning(f"Google recognition request error: {e}")
+            # Fallback to Sphinx (offline)
+            try:
+                text = recognizer.recognize_sphinx(audio)
+                logger.info(f"Transcribed with Sphinx: {text}")
+            except Exception as sphinx_error:
+                logger.error(f"Sphinx recognition error: {str(sphinx_error)}")
+                raise Exception("Unable to transcribe audio with any available service. Please try again with clearer audio.")
+        except sr.UnknownValueError:
+            raise Exception("Speech could not be understood. Please try again with clearer audio.")
+                
+        return text
+    except Exception as e:
+        if "format" in str(e).lower():
+            # Format-related error
+            raise Exception(f"Audio format error: {str(e)}. Try recording with a different microphone or browser.")
+        else:
+            # Other transcription error
+            logger.error(f"Error transcribing audio: {str(e)}")
+            raise Exception(f"Transcription error: {str(e)}")
+
+@app.post("/analyze_sentiment", response_model=SentimentResponse)
+async def analyze_sentiment(file: UploadFile = File(...)):
+    """
+    Analyze sentiment from audio file
+    """
+    try:
+        logger.info(f"Received audio file: {file.filename}")
+        audio_data = await file.read()
+        
+        if not audio_data:
+            raise HTTPException(status_code=400, detail="Empty audio file")
+        
+        file_size = len(audio_data)
+        logger.info(f"Audio file size: {file_size} bytes")
+        
+        if file_size < 100:  # Arbitrary small size check
+            raise HTTPException(status_code=400, detail="Audio file is too small or empty")
+            
+        # Step 1: Transcribe audio to text
+        try:
+            text = transcribe_audio(audio_data)
+        except Exception as transcription_error:
+            logger.error(f"Transcription failed: {str(transcription_error)}")
+            raise HTTPException(status_code=400, detail=str(transcription_error))
+        
+        if not text:
+            raise HTTPException(status_code=400, detail="Could not transcribe audio - no speech detected")
+            
+        logger.info(f"Transcribed text: {text}")
+        
+        # Step 2: Analyze sentiment
+        sentiment_result = analyze_text_sentiment(text)
+        
+        # Step 3: Return response
+        return {
+            "transcription": text,
+            "sentiment": sentiment_result["sentiment"],
+            "polarity": sentiment_result["polarity"]
+        }
+
+    except HTTPException:
+        # Re-raise HTTP exceptions
+        raise
+    except Exception as e:
+        logger.error(f"Error in sentiment analysis endpoint: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 if __name__ == "__main__":
     import uvicorn
